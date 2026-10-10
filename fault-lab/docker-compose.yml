@@ -1,0 +1,13 @@
+services:
+  api:
+    build:
+      context: .
+    container_name: fault-lab-api
+    restart: "no"
+
+  connection-error:
+    build:
+      context: .
+    container_name: fault-lab-connection-error
+    command: ["python", "connection_error.py"]
+    restart: "no"
