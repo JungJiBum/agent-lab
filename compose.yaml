@@ -5,6 +5,9 @@ services:
       - "8000:8000"
     env_file:
       - .env
+    volumes:
+      - .:/app
+      - "${OBSIDIAN_VAULT_PATH}:/data/obsidian:ro"
     depends_on:
       - ollama
 

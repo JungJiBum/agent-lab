@@ -28,6 +28,11 @@ async def list_mcp_tools():
 
 
 async def call_mcp_tool(name: str, arguments: dict | None = None):
+    print(
+        f"[MCP TOOL CALL] name={name}, arguments={arguments}",
+        flush=True,
+    )
+    
     server = StdioServerParameters(
         command="python",
         args=["-m", "app.mcp_server"],

@@ -18,3 +18,7 @@ __pycache__/
 
 # Logs
 *.log
+
+# RAG data
+/data/chroma/
+/data/obsidian/

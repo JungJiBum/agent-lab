@@ -1,6 +1,7 @@
 import httpx
 from mcp.server.fastmcp import FastMCP
 from urllib.parse import quote
+from app.rag.retriever  import search_documents
 
 mcp = FastMCP("Agent Lab Metrics")
 
@@ -56,6 +57,22 @@ async def get_container_status() -> list[dict]:
         response.raise_for_status()
         return response.json()
 
+@mcp.tool()
+def search_obsidian(query: str) -> list[dict]:
+    """Obsidian 문서에서 질문과 관련된 내용을 검색합니다."""
+    results = search_documents(query)
+
+    return [
+        {
+            "content": content,
+            "source": metadata["source"],
+            "path": metadata["path"],
+        }
+        for content, metadata in zip(
+            results["documents"][0],
+            results["metadatas"][0],
+        )
+    ]
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")
