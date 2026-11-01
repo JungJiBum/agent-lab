@@ -2,8 +2,11 @@ from app.rag.retriever import search_documents
 import httpx
 
 
-def ask_rag(question: str):
-    results = search_documents(question)
+def ask_rag(question: str, collection_name: str = "obsidian"):
+    results = search_documents(
+        question,
+        collection_name=collection_name
+    )
 
     context = "\n\n".join(results["documents"][0])
 
@@ -29,6 +32,6 @@ def ask_rag(question: str):
         },
         timeout=120.0
     )
-    
+
     response.raise_for_status()
     return response.json()["message"]["content"]

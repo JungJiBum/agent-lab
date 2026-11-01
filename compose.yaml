@@ -10,6 +10,7 @@ services:
       - "${OBSIDIAN_VAULT_PATH}:/data/obsidian:ro"
     depends_on:
       - ollama
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/app
 
   ollama:
     image: ollama/ollama:latest
@@ -17,6 +18,17 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+
+  news_collector:
+    build:
+      context: ./services/news_collector
+    volumes:
+      - ./services/news_collector:/service
+    working_dir: /service
+    ports:
+      - "8002:8002"
+    restart: unless-stopped
+    command: uvicorn main:app --host 0.0.0.0 --port 8002 --reload
 
 volumes:
   ollama_data:

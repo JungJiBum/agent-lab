@@ -5,8 +5,10 @@ from pydantic import BaseModel
 from pathlib import Path
 from app.providers import get_llm_provider
 
-app = FastAPI(title="Agent Lab")
+from app.api.news import router as news_router
 
+app = FastAPI(title="Agent Lab")
+app.include_router(news_router)
 class ChatRequest(BaseModel):
     message: str
 

@@ -1,16 +1,14 @@
 from app.rag.obsidian_loader import load_documents
 
+
 def split_text(text: str, chunk_size: int = 500) -> list[str]:
-    chunks = []
+    return [
+        text[start:start + chunk_size]
+        for start in range(0, len(text), chunk_size)
+    ]
 
-    for start in range(0, len(text), chunk_size):
-        chunk = text[start:start + chunk_size]
-        chunks.append(chunk)
 
-    return chunks
-
-def chunk_documents():
-    documents = load_documents()
+def chunk_text_documents(documents: list[dict]) -> list[dict]:
     all_chunks = []
 
     for doc in documents:
@@ -18,14 +16,13 @@ def chunk_documents():
 
         for index, chunk in enumerate(chunks):
             all_chunks.append({
-                "source": doc["source"],
-                "path": doc["path"],
+                **doc,
                 "chunk_index": index,
-                "content": chunk
+                "content": chunk,
             })
 
     return all_chunks
 
-if __name__ == "__main__":
-    chunks = chunk_documents()
-    print(f"전체 청크 수 : {len(chunks)}")
+
+def chunk_documents():
+    return chunk_text_documents(load_documents())

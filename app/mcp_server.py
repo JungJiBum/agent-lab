@@ -74,5 +74,27 @@ def search_obsidian(query: str) -> list[dict]:
         )
     ]
 
+@mcp.tool()
+def search_ai_news(query: str) -> list[dict]:
+    """수집된 AI 뉴스에서 질문과 관련된 기사를 검색합니다."""
+    results = search_documents(
+        query,
+        collection_name="ai_news",
+    )
+
+    return [
+        {
+            "title": metadata["title"],
+            "content": content,
+            "url": metadata["url"],
+            "source": metadata["source"],
+            "published_at": metadata["published_at"],
+        }
+        for content, metadata in zip(
+            results["documents"][0],
+            results["metadatas"][0],
+        )
+    ]
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")
