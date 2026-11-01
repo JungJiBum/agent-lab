@@ -2,14 +2,15 @@
 
 **MCP 기반 Docker 운영 장애 진단 및 RAG 문서 검색 AI Agent**
 
-Agent Lab은 자연어 질문에 따라 Docker 운영 정보를 조회하거나 Obsidian 문서를 검색하고, 수집한 데이터를 바탕으로 답변하는 Python 백엔드 프로젝트입니다.
+Agent Lab은 자연어 질문에 따라 Docker 운영 정보를 조회하거나 RAG 데이터 소스를 검색하고, 수집한 데이터를 바탕으로 답변하는 Python 백엔드 프로젝트입니다.
 
 LLM이 질문에 필요한 도구를 선택하고, MCP를 통해 실제 데이터를 조회한 뒤 결과를 해석하는 흐름을 구현했습니다.
 
-주요 기능은 다음 두 가지입니다.
+주요 기능은 다음과 같습니다.
 
 - **Docker 운영 장애 진단:** 컨테이너 상태와 로그를 조회하고 장애 원인 및 권장 조치 설명
-- **RAG 문서 검색:** Obsidian Markdown 문서를 ChromaDB에 저장하고 의미 기반 검색 결과를 활용한 답변 생성
+- **Obsidian RAG 검색:** Markdown 문서를 ChromaDB `obsidian` 컬렉션에 저장하고 의미 기반 검색 결과를 활용한 답변 생성
+- **AI 뉴스 수집 및 RAG:** RSS에서 AI 뉴스를 수집하고 기사 본문을 스크래핑·정규화한 뒤 ChromaDB `ai_news` 컬렉션에 저장하여 검색에 활용
 
 ## 아키텍처
 
